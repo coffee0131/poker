@@ -1,3 +1,4 @@
+import sys
 import random
 
 suits = 'CDHS'
@@ -210,14 +211,23 @@ if __name__ == '__main__':
     cards_A = [ deck[k] for k in range(0, 5)]
     cards_B = [ deck[k] for k in range(5, 10)]
 
-    print("player1",cards_A)
-    print("player2",cards_B)
-
     rank_A = Hands(cards_A).tell_hand_ranking()
     rank_B = Hands(cards_B).tell_hand_ranking()
 
-    print(rank_A)
-    print(rank_B)
+    u1 = Hands(cards_A)
+    u2 = Hands(cards_B)
+
+    print(u1.tell_winner(u2))
+
+
+    print("player1",cards_A,rank_A)
+    print("player2",cards_B,rank_B)
+
+    my_hand = Hands(['5C','6C', '7C', '8C', '9C'])
+    your_hand = Hands(['TH','6H', '7H', '8H', '9H'])
+    test(my_hand.tell_winner(your_hand) == False)
+    print(my_hand.tell_winner(your_hand))
+
 
 
     #Test Straight Flush
