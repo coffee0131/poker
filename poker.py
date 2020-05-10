@@ -22,6 +22,14 @@ class Card(metaclass=ABCMeta):
         """
         raise NotImplementedError("value method not implemented")
 
+    @property
+    def rank(self):
+        return self.card[0]
+
+    @property
+    def suit(self):
+        return self.card[1]
+            
     # card comparison operators
     def __gt__(self, other): return self.value() > other.value()
     def __ge__(self, other): return self.value() >= other.value()
@@ -54,7 +62,7 @@ class PKCard(Card):
 
 class Deck:
     def __init__(self, cls):
-        self.deck = [i+j for i in suits for j in ranks]
+        self.deck = [i+j for i in ranks for j in suits]
         deck_list = []
         for k in self.deck:
             deck_list.append(cls(k))
@@ -199,14 +207,17 @@ if __name__ == '__main__':
     deck = Deck(PKCard)  # deck of poker cards
     deck.shuffle()
 
-    my_hand = []
-    your_hand = []
-    for i in range(5):
-        for hand in (my_hand, your_hand):
-            card = deck.pop()
-            hand.append(card)
-    print(my_hand)
-    print(your_hand)
+    cards_A = [ deck[k] for k in range(0, 5)]
+    cards_B = [ deck[k] for k in range(5, 10)]
+
+    print("player1",cards_A)
+    print("player2",cards_B)
+
+    rank_A = Hands(cards_A).tell_hand_ranking()
+    rank_B = Hands(cards_B).tell_hand_ranking()
+
+    print(rank_A)
+    print(rank_B)
 
 
     #Test Straight Flush
